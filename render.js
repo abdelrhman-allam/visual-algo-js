@@ -28,8 +28,9 @@
             this.render();
         }
 
-        function sleep() {
-            return new Promise(resolve => setTimeout(resolve, this.time));
+        function sleep(time) {
+            
+            return new Promise(resolve => setTimeout(resolve, time));
         }
 
         this.start = async function start() {
@@ -104,6 +105,24 @@
             await this._mergeSort(this.board, 0, 0);
         }
 
+        this.insertionSort = async function (){
+            const arr = this.board
+            const ln = arr.length
+
+            for ( let i = 1; i < ln; i++){ // start from 1 to sort before the index
+                let v = arr[i] // current value
+                let j = i - 1 // before sorted items
+                while (j >=0 && v < arr[j]){ // test value less then previous item
+                    await this.drawAndWait();
+                    arr[j+1] = arr[j] // override with values with pervious
+                    j = j - 1 // j to previous index    
+                }
+                arr[j+1] = v // assign to last j + 1
+                await this.drawAndWait();
+            }
+
+        }
+
         this.render = function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const board = this.board;
@@ -124,7 +143,7 @@
 
         this.drawAndWait = async function drawAndWait() {
             this.render()
-            await sleep();
+            await sleep(this.time);
         };
     };
     window.VisualBoard = Board;
