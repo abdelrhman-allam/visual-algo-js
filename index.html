@@ -17,6 +17,11 @@
     <title>Visual Algorithmes (JS)</title>
 </head>
 <button id='btnRandom' button='random'>Random</button>
+<select id='drpSort'>
+    <option value="bubble">Bubble Sort</option>
+    <option value="mergeSort">Merge Sort</option>
+    <option value="quickSort">Quick Sort</option>
+</select>
 <button id='btnStart' button='random'>start</button>
 <body>
 
@@ -25,18 +30,18 @@
     <script src="render.js"></script>
     <script>
          (async () => {
-            var visual = new VisualBoard(8, 8, 50);
+            var visual = new VisualBoard(16, 16, 24, 1000);
             (document.getElementById('btnRandom')).addEventListener('click',function(e){
                 visual.random();
             });
 
             (document.getElementById('btnStart')).addEventListener('click',function(e){
-                visual.start(1000/120);
+                let selected = document.getElementById("drpSort").value
+                if(selected == 'bubble') visual.start();
+                else if (selected =='mergeSort') visual.mergeSort()
             })
             
-//            await visual.start(1000 / 24);    
-            
-   
+          
         })();        
     </script>
 </body>
