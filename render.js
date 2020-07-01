@@ -18,12 +18,20 @@
             const r = Math.floor(Math.random() * 255);
             const g = Math.floor(Math.random() * 255);
             const b = Math.floor(Math.random() * 255);
-            this.rgba = "rgba(" + r + "," + g + "," + b; //rgba(135,26,31,0.4286748831988356)
+            this.rgba = "rgba(88,40,210"; //rgba(135,26,31,0.4286748831988356)
 
             this.board = new Array(row * col);
             for (var j = 0; j < this.board.length; j++) {
-                this.board[j] = parseFloat(Math.random()).toFixed(2);
+                this.board[j] =  parseFloat(Math.random()).toFixed(2);
             }
+
+            // for(var j = 0; j < this.board.length; j ++){
+            //     for(var i = j +1; i < this.board.length-1; i ++){
+            //          let k = (Math.floor(Math.random() * this.board.length) - j) + i
+            //         // console.log({k,i})
+            //          swap(this.board, i, k)
+            //     }
+            // }
 
             this.render();
         }
@@ -41,8 +49,9 @@
                         this.board[j + 1] = parseFloat(this.board[j]);
                         this.board[j] = tmp;
                     }
-                    await this.drawAndWait();
+                   
                 }
+                await this.drawAndWait();
             }
         };
 
@@ -113,7 +122,7 @@
                 let v = arr[i] // current value
                 let j = i - 1 // before sorted items
                 while (j >=0 && v < arr[j]){ // test value less then previous item
-                    await this.drawAndWait();
+                   // await this.drawAndWait();
                     arr[j+1] = arr[j] // override with values with pervious
                     j = j - 1 // j to previous index    
                 }
@@ -140,6 +149,55 @@
             }
         }
 
+        this.quickSort = async function(){
+            
+            await this._quickSort(this.board, 0, this.board.length-1);
+        }
+
+        const getPivot = function(a, l,h){
+            let m = Math.floor(l+h/2)
+            let p = h
+            if(a[l] < a[m]){
+                if(a[m]< a[h]){
+                    p = m
+                }
+            }
+            else if (a[l] < a[h]){
+                p = l
+            }
+            return p
+        }
+
+        function swap(arr, l, r){
+            let tmp = arr[l]
+            arr[l] =  arr[r]
+            arr[r] = tmp;
+        }
+        this._partition = async function _partion(arr, low, high){
+            let pi = getPivot(arr, low, high)
+            let pv = arr[pi]
+            swap(arr, low, pi)
+            let border = low
+            for(let i = low; i < high;i++){
+                if(arr[i]< pv){
+                    border = border +1
+                    swap(arr, border, i)
+                }
+               
+            }
+            swap(arr, border, low)
+            await this.drawAndWait();
+            return border
+        }
+        
+        this._quickSort = async function _quickSort(arr, low, high){
+            // debugger
+            if (low < high){
+                let p = await this._partition(arr, low, high);
+                await this._quickSort(arr, low, p - 1);
+                await this._quickSort(arr,  p + 1, high);
+            }
+        }
 
         this.drawAndWait = async function drawAndWait() {
             this.render()

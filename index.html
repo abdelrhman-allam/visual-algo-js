@@ -20,6 +20,7 @@
 <select id='drpSort'>
     <option value="bubble">Bubble Sort</option>
     <option value="insertion">Insertion Sort</option>
+    <option value="selection">Selection Sort (TODO)</option>
     <option value="mergeSort">Merge Sort</option>
     <option value="quickSort">Quick Sort</option>
 </select>
@@ -31,7 +32,7 @@
     <script src="render.js"></script>
     <script>
          (async () => {
-            var visual = new VisualBoard(16, 16, 24, 1000/36);
+            var visual = new VisualBoard(16, 16, 24, 1000/12);
             (document.getElementById('btnRandom')).addEventListener('click',function(e){
                 visual.random();
             });
@@ -39,8 +40,11 @@
             (document.getElementById('btnStart')).addEventListener('click',function(e){
                 let selected = document.getElementById("drpSort").value
                 if(selected == 'bubble') visual.start();
-                else if (selected =='mergeSort') visual.mergeSort();
                 else if (selected == 'insertion') visual.insertionSort();
+                else if (selected =='selection') visual.selectionSort();
+                else if (selected =='mergeSort') visual.mergeSort();
+                else if (selected =='quickSort') visual.quickSort();
+
             })
             
           
