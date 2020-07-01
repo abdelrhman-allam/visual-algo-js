@@ -154,19 +154,19 @@
             await this._quickSort(this.board, 0, this.board.length-1);
         }
 
-        const getPivot = function(a, l,h){
-            let m = Math.floor(l+h/2)
-            let p = h
-            if(a[l] < a[m]){
-                if(a[m]< a[h]){
-                    p = m
-                }
-            }
-            else if (a[l] < a[h]){
-                p = l
-            }
-            return p
-        }
+        // const getPivot = function(a, l,h){
+        //     let m = Math.floor(l+h/2)
+        //     let p = h
+        //     if(a[l] < a[m]){
+        //         if(a[m]< a[h]){
+        //             p = m
+        //         }
+        //     }
+        //     else if (a[l] < a[h]){
+        //         p = l
+        //     }
+        //     return p
+        // }
 
         function swap(arr, l, r){
             let tmp = arr[l]
@@ -174,18 +174,16 @@
             arr[r] = tmp;
         }
         this._partition = async function _partion(arr, low, high){
-            let pi = getPivot(arr, low, high)
-            let pv = arr[pi]
-            swap(arr, low, pi)
+            let pv = arr[high]
             let border = low
             for(let i = low; i < high;i++){
                 if(arr[i]< pv){
-                    border = border +1
                     swap(arr, border, i)
+                    border = border +1
                 }
-               
+                await this.drawAndWait();
             }
-            swap(arr, border, low)
+            swap(arr, border, high)
             await this.drawAndWait();
             return border
         }

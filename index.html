@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
-        canvas {
+        canvas, div {
             padding-left: 0;
             padding-right: 0;
             margin-left: auto;
@@ -16,38 +17,43 @@
     </style>
     <title>Visual Algorithmes (JS)</title>
 </head>
-<button id='btnRandom' button='random'>Random</button>
-<select id='drpSort'>
-    <option value="bubble">Bubble Sort</option>
-    <option value="insertion">Insertion Sort</option>
-    <option value="selection">Selection Sort (TODO)</option>
-    <option value="mergeSort">Merge Sort</option>
-    <option value="quickSort">Quick Sort</option>
-</select>
-<button id='btnStart' button='random'>start</button>
+
 <body>
 
-    <canvas id="board" style="background-color: beige;" />
-
+    <div class="container container-fluid">
+        <div class="row">
+            <div class="col">
+        <button id='btnRandom' type="button" class="btn btn-primary">Random</button>
+        <select id='drpSort'>
+            <option value="bubble">Bubble Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="selection">Selection Sort (TODO)</option>
+            <option value="mergeSort">Merge Sort</option>
+            <option value="quickSort">Quick Sort</option>
+        </select>
+        <button id='btnStart' type="button" class="btn btn-danger" >start</button>
+        <canvas class="rounded" id="board" style="background-color: beige;" />
+        </div></div>
+    </div>
     <script src="render.js"></script>
     <script>
-         (async () => {
-            var visual = new VisualBoard(16, 16, 24, 1000/12);
-            (document.getElementById('btnRandom')).addEventListener('click',function(e){
+        (async () => {
+            var visual = new VisualBoard(16, 16, 32, 1000 / 12);
+            (document.getElementById('btnRandom')).addEventListener('click', function (e) {
                 visual.random();
             });
 
-            (document.getElementById('btnStart')).addEventListener('click',function(e){
+            (document.getElementById('btnStart')).addEventListener('click', function (e) {
                 let selected = document.getElementById("drpSort").value
-                if(selected == 'bubble') visual.start();
+                if (selected == 'bubble') visual.start();
                 else if (selected == 'insertion') visual.insertionSort();
-                else if (selected =='selection') visual.selectionSort();
-                else if (selected =='mergeSort') visual.mergeSort();
-                else if (selected =='quickSort') visual.quickSort();
+                else if (selected == 'selection') visual.selectionSort();
+                else if (selected == 'mergeSort') visual.mergeSort();
+                else if (selected == 'quickSort') visual.quickSort();
 
             })
-            
-          
+
+
         })();        
     </script>
 </body>
