@@ -15,24 +15,17 @@
 
         this.random = function random() {
 
-            const r = Math.floor(Math.random() * 255);
-            const g = Math.floor(Math.random() * 255);
+            const r = Math.floor(Math.random() * 30);
+            const g = Math.floor(Math.random() * 30);
             const b = Math.floor(Math.random() * 255);
-            this.rgba = "rgba(88,40,210"; //rgba(135,26,31,0.4286748831988356)
+            this.rgba = "rgba("+r+","+g+","+b+""; //rgba(135,26,31,0.4286748831988356)
 
             this.board = new Array(row * col);
             for (var j = 0; j < this.board.length; j++) {
-                this.board[j] =  parseFloat(Math.random()).toFixed(2);
+                this.board[j] =  (parseFloat(Math.random()+.1).toFixed(3));
+                
             }
-
-            // for(var j = 0; j < this.board.length; j ++){
-            //     for(var i = j +1; i < this.board.length-1; i ++){
-            //          let k = (Math.floor(Math.random() * this.board.length) - j) + i
-            //         // console.log({k,i})
-            //          swap(this.board, i, k)
-            //     }
-            // }
-
+            
             this.render();
         }
 
@@ -141,11 +134,11 @@
                 const y = this.size * Math.floor(i / this.row);
                 ctx.beginPath();
                 ctx.rect(x, y, this.size, this.size);
-                ctx.fillStyle = this.rgba + "," + board[i] + ")";
+                ctx.fillStyle = this.rgba + ", " +(board[i])+")";
                 ctx.fill();
                 ctx.font = "6px";
-                ctx.fillStyle = "rgba(255,255,255,1)";
-                ctx.fillText((parseFloat(board[i]) * 100).toFixed(0).toString(), x  , y + (size / 2));
+                // ctx.fillStyle = "rgba(255,255,255,1)";
+                // ctx.fillText((parseFloat(board[i]) * 100).toFixed(0).toString(), x  , y + (size / 2));
             }
         }
 
@@ -176,15 +169,17 @@
         this._partition = async function _partion(arr, low, high){
             let pv = arr[high]
             let border = low
+            
             for(let i = low; i < high;i++){
                 if(arr[i]< pv){
                     swap(arr, border, i)
                     border = border +1
+                 
                 }
-                await this.drawAndWait();
+          
             }
-            swap(arr, border, high)
-            await this.drawAndWait();
+            
+            swap(arr, border, high)            
             return border
         }
         
@@ -192,6 +187,7 @@
             // debugger
             if (low < high){
                 let p = await this._partition(arr, low, high);
+                await this.drawAndWait();
                 await this._quickSort(arr, low, p - 1);
                 await this._quickSort(arr,  p + 1, high);
             }
